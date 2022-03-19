@@ -1,0 +1,36 @@
+{%extends "registration/base.html"%} {% load bootstrap3 %}
+{% block content %}
+<div class="container-fluid">
+    <div class="container">
+        <div class="row" style="margin-left:25%;margin-top:5%;">
+                <div class="col-md-8 col-sm-8">
+                    <h4 id="title" style="padding-bottom:3%;font-family: 'Righteous', cursive;font-size:20px;">Neighbourhood</h4>
+                </div>
+            </div>
+    <div class="row">
+         <div class="col-md-2 col-sm-2">
+        </div>
+        <div class="col-md-8 col-sm-8">
+            {% if form.errors %}
+            <p> Some Information Might be Incorrect </p>
+            {% endif %}
+            <div id="register" style="z-index:3;">
+                <form action="/accounts/register/" method="post">
+                    {% csrf_token %}
+                    {% bootstrap_form form layout='inline' %}
+                    <div class="form-group" style="margin-left:40%;">
+                        <input type="submit" class="btn btn-primary"  value="Sign Up">
+                    </div>
+
+                    <input type="hidden" name="next" value="{{next}}">
+
+                </form>
+
+            </div>
+             <div class="col-md-2 col-sm-2" style="margin-top:20%;"></div>
+        </div>
+    </div>
+    <!-- main div -->
+</div>
+ 
+{% endblock %}

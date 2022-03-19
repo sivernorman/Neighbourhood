@@ -1,0 +1,148 @@
+
+  
+{% extends 'base.html' %}
+{% load bootstrap3 %}
+{% block content %}
+<div class="nav sticky-top" role="navigation">
+    <div class="container-fluid" id="navstats">
+        <div class="navbar-header">
+            <div>
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid" id="profile">
+    <div class="row" id="main">
+        <div class="col-md-4 col-sm-4">
+            <div class="card text-center" style="width:90%;">
+                <a href="" style="margin-left:80%;margin-top:3%;" class="dropdown-toggle btn btn-default"
+                    data-toggle="dropdown" role="button" aria-expanded="false">
+                    <i class="fas fa-cog" style="font-size:20px;"></i>
+                </a>
+                <ul class="dropdown-menu" role="menu" style="padding-left:1%; ;">
+                    <li>
+                        <a href="{%url 'profile' %}">Account</a>
+                    </li>
+                    <li>
+                        <a href="/accounts/password/change">Change Password</a>
+                    </li>
+                    <li>
+                        <a href="" data-toggle="modal" data-target="#edit" style="color:gray;">Edit Profile</a>
+                    </li>
+                </ul>
+                <div class="modal fade" id="edit" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-scrollable" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header" style="padding-left:20%;background-color: #E8DEDC;">
+                                <div class="row">
+                                    <form action="{%url 'profile' %}" method="post" enctype="multipart/form-data"
+                                        style="margin-top:10%;color: white;">
+                                        {% csrf_token %}
+
+                                        {% for field in form %}
+                                        {% bootstrap_field field %}
+                                        {% endfor %}
+                                        <input type="submit" class="btn btn-primary" value="update">
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% if user.is_authenticated %}
+                {% if user.profile %}
+                <img src="{{user.profile.profile_pic.url}}" class="img-fluid" id="ppic" alt="...">
+                <div class="card-body">
+                    <h5 style="color: gray;">@{{user.username}}</h5>
+                    <h5 class="card-text">{{user.profile.bio}}</h5>
+                    <h6 style="color: #00A6FB;">Location: {{user.profile.neighbourhood}},{{user.profile.location}}</h6>
+                </div>
+                {% else %}
+                <img src="https://www.mekitec.com/wp-content/uploads/2015/06/dummy-user.png" class="img-fluid" id="ppic"
+                    alt="...">
+                <div class="card-body">
+                    <h5 style="color: gray;">@{{user.username}}</h5>
+                    <form action="{%url 'profile' %}" method="post" enctype="multipart/form-data"
+                        style="margin-top:10%;color: white;">
+                        {% csrf_token %}
+
+                        {% for field in form %}
+                        {% bootstrap_field field %}
+                        {% endfor %}
+                        <input type="submit" class="btn btn-primary" value="add profile">
+                    </form>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-md-8 col-sm-12">
+            <div class="row" id="parent">
+                <div class="row" style="width:100%;">
+                    <h1>My Hood:</h1>
+                    <h1 style="color:#00A6FB;">{{user.profile.neighbourhood}}</h1>
+                    {% for detail in details %}
+                    {% if detail.neighbourhood.id == user.profile.neighbourhood.id and detail.detailtype == "Contact" %}
+                    <p style="color:grey;margin-top:1%;margin-left:10%;">{{detail.detail}} : {{detail.contact}} </p>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="row">
+                        <img src="{{user.profile.neighbourhood.pic.url}}" class="img-fluid" style="height:300px;width:100%;" alt="...">
+                </div>
+                <div class="row">
+                        <a class="btn btn-primary" href="" data-toggle="modal" data-target="#biz" style="color:white;">Click to view businesses in {{user.profile.neighbourhood}}</a>
+                <div class="modal fade" id="biz" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-scrollable" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header" style="padding-left:20%;background-color: #E8DEDC;">
+                                <div class="row">
+                                        <h1 style="color:#00A6FB;">Business in {{user.profile.neighbourhood}}</h1>
+                                        {% for detail in details %}
+                                        {% if detail.neighbourhood.id == user.profile.neighbourhood.id and detail.detailtype == "Business" %}
+                                        <p style="color:grey;margin-top:1%;margin-left:10%;">{{detail.detail}} : {{detail.contact}} </p>
+                                        {% endif %}
+                                        {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <div class="row">
+                    <form action="{%url 'profile' %}" method="post" enctype="multipart/form-data"
+                    style="color: white;width:100%;">
+                    {% csrf_token %}
+
+                    {% for field in postform %}
+                    {% bootstrap_field field %}
+                    {% endfor %}
+                    <input type="submit" class="btn btn-primary" value="post">
+                </form>
+            </div>
+            {% for post in posts %}
+            {% if post.neighbourhood.id == user.profile.neighbourhood.id %}
+            <div class="row" style="width:100%;margin-top:1%;">
+                <div class="card" style="width:100%;">
+                    <div class="card-header" style="background-color:#00A6FB;">
+                        <h4>@ {{post.user}}</h4>
+                    </div>
+                    <div class="card-body">
+                            <p>{{post.post}}</p>
+                        </div>
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+</div>
+</div>
+{% endblock %}
