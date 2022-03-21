@@ -15,7 +15,7 @@ class Neighbourhood(models.Model):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    profile_pic = models.ImageField(blank=True,upload_to = 'images/',default = 'images/beauty1.jpg')
+    profile_pic = models.ImageField(blank=True,upload_to = 'images/',default = 'images/')
     neighbourhood = models.ForeignKey(Neighbourhood,on_delete=models.CASCADE,blank=True,null=True)
     bio = models.CharField(max_length = 255)
     location = models.CharField(max_length = 255)
@@ -43,4 +43,4 @@ class Post(models.Model):
 
     def __str__(self):
         return f'{self.user}'
-# Create your models here.
+ 

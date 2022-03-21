@@ -15,12 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
-from django.contrib.auth import views 
-from django.conf.urls import url
-
+  
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('accounts/', include('registration.backends.simple.urls')),
-    # path('logout/', views.logout, {"next_page": '/'}),
     path('',include('hoodapp.urls'))
 ]

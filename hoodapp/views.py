@@ -1,8 +1,12 @@
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from .forms import ProfileForm,PostForm
 from .models import Profile,Neighbourhood,Post,HoodDetails
+
+ 
+
 
 @login_required(login_url='/accounts/login/')
 def profile(request):
@@ -29,4 +33,3 @@ def profile(request):
 def timeline(request):
     hoods=Neighbourhood.objects.all()
     return render(request, 'timeline.html',{"hoods":hoods})
- 
