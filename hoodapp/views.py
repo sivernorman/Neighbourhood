@@ -33,3 +33,7 @@ def profile(request):
 def timeline(request):
     hoods=Neighbourhood.objects.all()
     return render(request, 'timeline.html',{"hoods":hoods})
+
+def login(request):
+    context={}
+    return render (request,'login.html', context)

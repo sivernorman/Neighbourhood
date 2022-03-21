@@ -5,7 +5,7 @@ from django.urls import path
 urlpatterns=[
    path('',views.timeline,name='timeline'),
    path('accounts/profile/',views.profile,name='profile'),
-#    path('accounts/',views.registration.backends.simple.urls'),
+   path('accounts/login',views.login),
 ]
 if settings.DEBUG:
     urlpatterns+= static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
