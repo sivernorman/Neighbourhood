@@ -15,7 +15,7 @@
             <p> Some Information Might be Incorrect </p>
             {% endif %}
             <div id="register" style="z-index:3;">
-                <form action="/accounts/register/" method="post">
+                <form action="/accounts/signup/" method="post">
                     {% csrf_token %}
                     {% bootstrap_form form layout='inline' %}
                     <div class="form-group" style="margin-left:40%;">
