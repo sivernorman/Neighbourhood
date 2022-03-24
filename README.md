@@ -28,7 +28,7 @@ access the application on this localhost address http://127.0.0.1:8000
 # Prerequisites
 You need the following to work on the project:
 
-postgesql
+postgresql
 Python version 3.6
 Django 2.0+
 Pip
@@ -47,6 +47,8 @@ Bootstrap
 django-bootstrap4
 Heroku
 Python3.8
+
+
 # Clone repository
 git clone   https://sivernorman.github.io/Neighbourhood/
 cd Neighbourhood
